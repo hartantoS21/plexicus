@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual Environment
+venv/
+.venv/
+
+# Report output
+*.html
+
+# Editor config
+.vscode/
+.idea/
