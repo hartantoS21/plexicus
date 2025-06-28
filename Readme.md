@@ -90,10 +90,10 @@ python validator.py
 ---
 ---
 
-## 📄 Description (🇬🇧 ENGLISH)
+# Description (🇬🇧 ENGLISH)
 
-This project is a **take-home test** from **Plexicus**.  
-The goal is to validate security vulnerability findings exported in **SARIF format** (`findings.json`) from an API scan.
+This project is a take-home test from Plexicus.  
+The goal is to validate security vulnerability findings exported in SARIF format (`findings.json`) from an API scan.
 
 There are three available validation methods:
 
