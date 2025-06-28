@@ -4,10 +4,11 @@
 Take-home test dari Plexicus. 
 Tujuannya adalah untuk memvalidasi hasil temuan kerentanan keamanan pada API yang diekspor dalam format SARIF (`findings.json`).
 
-Terdapat dua metode validasi yang tersedia:
+Terdapat tiga metode validasi yang tersedia:
 
 1. **BDD (Behavior-Driven Development)** menggunakan `behave`, lengkap dengan laporan HTML.
 2. **Skrip Python sederhana (`validator.py`)** untuk validasi langsung via terminal.
+3. **Automation menggunakan Robot Framework** untuk pengujian otomatis berbasis keyword.
 
 ---
 
@@ -65,20 +66,44 @@ python validator.py
 ```
 
 ---
+
+#### ✅ Opsi 3: Jalankan dengan Robot
+
+1. Buat dan aktifkan virtual environment:
+
+    ```powershell
+    python -m venv venv
+    .\venv\Scripts\Activate.ps1
+    ```
+
+2. Instal dependensi:
+
+    ```bash
+    pip install robotframework
+    ```
+
+3. Jalankan pengujian:
+
+    ```bash
+    robot robot/ValidateSARIFFindings.robot
+    ```
 ---
-## Description (🇬🇧 ENGLISH)
+---
 
-Take-home test project from Plexicus.  
-The goal is to validate the exported API security vulnerability findings in SARIF format (`findings.json`).
+## 📄 Description (🇬🇧 ENGLISH)
 
-This project provides two validation methods:
+This project is a **take-home test** from **Plexicus**.  
+The goal is to validate security vulnerability findings exported in **SARIF format** (`findings.json`) from an API scan.
 
-1. **BDD (Behavior-Driven Development)** using `behave`, with HTML report output.
-2. **Simple Python script (`validator.py`)** for direct validation from terminal.
+There are three available validation methods:
+
+1. **BDD (Behavior-Driven Development)** using `behave`, complete with HTML reporting.
+2. **Simple Python script (`validator.py`)** for quick terminal-based validation.
+3. **Automation using Robot Framework**, with keyword-driven testing.
 
 ---
 
-### 🎯 Validation Rules
+### 🎯 What Is Being Validated?
 
 - The `findings.json` file must contain exactly **6 findings**.
 - There must be one **SQL Injection** finding with the following criteria:
@@ -87,13 +112,13 @@ This project provides two validation methods:
   - Security severity: greater than 8.0
   - Issue owner: `tmalbos`
   - Related file: `index.php`
-- All findings with a `ruleId` related to `package.json` must be owned by **Jose**.
+- All findings with `ruleId` related to `package.json` must be owned by **Jose**.
 
 ---
 
 ### 🧪 How to Run the Validation
 
-#### ✅ Option 1: Use `behave` (BDD)
+#### ✅ Option 1: Run with `behave` (BDD)
 
 1. Create and activate a virtual environment:
 
@@ -125,8 +150,31 @@ This project provides two validation methods:
 
 #### ✅ Option 2: Run Python Script Directly
 
-If you prefer a quicker validation without BDD:
+If you prefer fast validation without BDD:
 
 ```bash
 python validator.py
 ```
+
+---
+
+#### ✅ Option 3: Run with Robot Framework
+
+1. Create and activate a virtual environment:
+
+    ```powershell
+    python -m venv venv
+    .\venv\Scripts\Activate.ps1
+    ```
+
+2. Install dependencies:
+
+    ```bash
+    pip install robotframework
+    ```
+
+3. Run the Robot Framework test suite:
+
+    ```bash
+    robot robot/ValidateSARIFFindings.robot
+    ```

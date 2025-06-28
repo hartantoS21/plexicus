@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.3.1 (Python 3.11.9 on win32)" generated="2025-06-28T08:11:55.064500" rpa="false" schemaversion="5">
+<suite id="s1" name="ValidateSARIFFindings" source="C:\Users\WINDOWS\Desktop\New folder (2)\plexicus\robot\ValidateSARIFFindings.robot">
+<kw name="Load SARIF File" type="SETUP">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-06-28T08:11:55.121232" level="INFO">${json} = {'$schema': 'https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json', 'version': '2.1.0', 'runs': [{'tool': {'driver': {'name': 'opengrep', 'organization': 'Unk...</msg>
+<var>${json}</var>
+<arg>__import__('json').load(open('${filepath}', encoding='utf-8'))</arg>
+<arg>modules=builtins</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-06-28T08:11:55.119481" elapsed="0.001751"/>
+</kw>
+<kw name="Set Suite Variable" owner="BuiltIn">
+<msg time="2025-06-28T08:11:55.123240" level="INFO">${sarif_data} = {'$schema': 'https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json', 'version': '2.1.0', 'runs': [{'tool': {'driver': {'name': 'opengrep', 'organization': 'Unk...</msg>
+<arg>${sarif_data}</arg>
+<arg>${json}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<status status="PASS" start="2025-06-28T08:11:55.121232" elapsed="0.002008"/>
+</kw>
+<arg>../data/findings.json</arg>
+<status status="PASS" start="2025-06-28T08:11:55.119481" elapsed="0.003759"/>
+</kw>
+<test id="s1-t1" name="Validate Total Number Of Findings" line="18">
+<kw name="Get Length" owner="BuiltIn">
+<msg time="2025-06-28T08:11:55.123240" level="INFO">Length is 6.</msg>
+<msg time="2025-06-28T08:11:55.123240" level="INFO">${total} = 6</msg>
+<var>${total}</var>
+<arg>${sarif_data['runs'][0]['results']}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="PASS" start="2025-06-28T08:11:55.123240" elapsed="0.000000"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2025-06-28T08:11:55.123240" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${total}</arg>
+<arg>${EXPECTED_FINDING_COUNT}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2025-06-28T08:11:55.123240" elapsed="0.000000"/>
+</kw>
+<status status="PASS" start="2025-06-28T08:11:55.123240" elapsed="0.000000"/>
+</test>
+<test id="s1-t2" name="Validate SQL Injection Finding" line="22">
+<kw name="Get Finding By RuleId">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-06-28T08:11:55.127162" level="INFO">${results} = [{'ruleId': 'php.lang.security.injection.echoed-request.echoed-request', 'level': 'warning', 'message': {'text': 'The code displays user-supplied input directly without any escape or encoding, allowin...</msg>
+<var>${results}</var>
+<arg>${sarif_data['runs'][0]['results']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-06-28T08:11:55.126655" elapsed="0.000507"/>
+</kw>
+<for flavor="IN">
+<iter>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-06-28T08:11:55.128677" level="INFO">${current_rule} = php.lang.security.injection.echoed-request.echoed-request</msg>
+<var>${current_rule}</var>
+<arg>${item['ruleId']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-06-28T08:11:55.127162" elapsed="0.001515"/>
+</kw>
+<kw name="Run Keyword If" owner="BuiltIn">
+<arg>'${current_rule}' == '${rule_id}'</arg>
+<arg>Return From Keyword</arg>
+<arg>${item}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2025-06-28T08:11:55.128677" elapsed="0.000000"/>
+</kw>
+<var name="${item}">{'ruleId': 'php.lang.security.injection.echoed-request.echoed-request', 'level': 'warning', 'message': {'text': 'The code displays user-supplied input directly without any escape or encoding, allowing...</var>
+<status status="PASS" start="2025-06-28T08:11:55.127162" elapsed="0.001515"/>
+</iter>
+<iter>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-06-28T08:11:55.129397" level="INFO">${current_rule} = json.npm.security.package-dependencies-check.package-dependencies-check</msg>
+<var>${current_rule}</var>
+<arg>${item['ruleId']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-06-28T08:11:55.129397" elapsed="0.000000"/>
+</kw>
+<kw name="Run Keyword If" owner="BuiltIn">
+<arg>'${current_rule}' == '${rule_id}'</arg>
+<arg>Return From Keyword</arg>
+<arg>${item}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2025-06-28T08:11:55.129397" elapsed="0.000000"/>
+</kw>
+<var name="${item}">{'ruleId': 'json.npm.security.package-dependencies-check.package-dependencies-check', 'level': 'warning', 'message': {'text': 'The package.json file specifies the \'express\' and \'lodash\' dependenci...</var>
+<status status="PASS" start="2025-06-28T08:11:55.129397" elapsed="0.000000"/>
+</iter>
+<iter>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-06-28T08:11:55.129397" level="INFO">${current_rule} = php.lang.security.injection.tainted-sql-string.tainted-sql-string</msg>
+<var>${current_rule}</var>
+<arg>${item['ruleId']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-06-28T08:11:55.129397" elapsed="0.000000"/>
+</kw>
+<kw name="Run Keyword If" owner="BuiltIn">
+<kw name="Return From Keyword" owner="BuiltIn">
+<msg time="2025-06-28T08:11:55.131405" level="INFO">Returning from the enclosing user keyword.</msg>
+<arg>${item}</arg>
+<doc>Returns from the enclosing user keyword.</doc>
+<status status="PASS" start="2025-06-28T08:11:55.131405" elapsed="0.000000"/>
+</kw>
+<arg>'${current_rule}' == '${rule_id}'</arg>
+<arg>Return From Keyword</arg>
+<arg>${item}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2025-06-28T08:11:55.129397" elapsed="0.002008"/>
+</kw>
+<var name="${item}">{'ruleId': 'php.lang.security.injection.tainted-sql-string.tainted-sql-string', 'level': 'error', 'message': {'text': 'The code concatenates unsanitized user input directly into a SQL query, resulting...</var>
+<status status="PASS" start="2025-06-28T08:11:55.129397" elapsed="0.002008"/>
+</iter>
+<var>${item}</var>
+<value>@{results}</value>
+<status status="PASS" start="2025-06-28T08:11:55.127162" elapsed="0.004243"/>
+</for>
+<kw name="Fail" owner="BuiltIn">
+<arg>No finding with ruleId '${rule_id}' found</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2025-06-28T08:11:55.131405" elapsed="0.000000"/>
+</kw>
+<msg time="2025-06-28T08:11:55.131405" level="INFO">${finding} = {'ruleId': 'php.lang.security.injection.tainted-sql-string.tainted-sql-string', 'level': 'error', 'message': {'text': 'The code concatenates unsanitized user input directly into a SQL query, resulting...</msg>
+<var>${finding}</var>
+<arg>${SQL_RULE_ID}</arg>
+<status status="PASS" start="2025-06-28T08:11:55.125624" elapsed="0.005781"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${finding['level']}</arg>
+<arg>${EXPECTED_LEVEL}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2025-06-28T08:11:55.131405" elapsed="0.001330"/>
+</kw>
+<kw name="Convert To Number" owner="BuiltIn">
+<msg time="2025-06-28T08:11:55.133750" level="INFO">${severity} = 8.7</msg>
+<var>${severity}</var>
+<arg>${finding['properties']['security-severity']}</arg>
+<doc>Converts the given item to a floating point number.</doc>
+<status status="PASS" start="2025-06-28T08:11:55.132735" elapsed="0.001015"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${severity} &gt; ${EXPECTED_SEVERITY}</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2025-06-28T08:11:55.133750" elapsed="0.000000"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${finding['properties']['issue_owner']}</arg>
+<arg>${EXPECTED_OWNER}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2025-06-28T08:11:55.134728" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-06-28T08:11:55.134728" level="INFO">${uri} = index.php</msg>
+<var>${uri}</var>
+<arg>${finding['locations'][0]['physicalLocation']['artifactLocation']['uri']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-06-28T08:11:55.134728" elapsed="0.000000"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${uri}</arg>
+<arg>${EXPECTED_FILENAME}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2025-06-28T08:11:55.134728" elapsed="0.000000"/>
+</kw>
+<status status="PASS" start="2025-06-28T08:11:55.125624" elapsed="0.009104"/>
+</test>
+<test id="s1-t3" name="Validate Package Finding Ownership" line="31">
+<kw name="Get All Findings By RuleId">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-06-28T08:11:55.140505" level="INFO">${results} = [{'ruleId': 'php.lang.security.injection.echoed-request.echoed-request', 'level': 'warning', 'message': {'text': 'The code displays user-supplied input directly without any escape or encoding, allowin...</msg>
+<var>${results}</var>
+<arg>${sarif_data['runs'][0]['results']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-06-28T08:11:55.138211" elapsed="0.002294"/>
+</kw>
+<kw name="Create List" owner="BuiltIn">
+<msg time="2025-06-28T08:11:55.140505" level="INFO">${matches} = []</msg>
+<var>${matches}</var>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2025-06-28T08:11:55.140505" elapsed="0.000000"/>
+</kw>
+<for flavor="IN">
+<iter>
+<kw name="Run Keyword If" owner="BuiltIn">
+<arg>'${item['ruleId']}' == '${rule_id}'</arg>
+<arg>Append To List</arg>
+<arg>${matches}</arg>
+<arg>${item}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2025-06-28T08:11:55.142239" elapsed="0.000000"/>
+</kw>
+<var name="${item}">{'ruleId': 'php.lang.security.injection.echoed-request.echoed-request', 'level': 'warning', 'message': {'text': 'The code displays user-supplied input directly without any escape or encoding, allowing...</var>
+<status status="PASS" start="2025-06-28T08:11:55.142239" elapsed="0.000000"/>
+</iter>
+<iter>
+<kw name="Run Keyword If" owner="BuiltIn">
+<kw name="Append To List" owner="Collections">
+<arg>${matches}</arg>
+<arg>${item}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="PASS" start="2025-06-28T08:11:55.142239" elapsed="0.000000"/>
+</kw>
+<arg>'${item['ruleId']}' == '${rule_id}'</arg>
+<arg>Append To List</arg>
+<arg>${matches}</arg>
+<arg>${item}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2025-06-28T08:11:55.142239" elapsed="0.000000"/>
+</kw>
+<var name="${item}">{'ruleId': 'json.npm.security.package-dependencies-check.package-dependencies-check', 'level': 'warning', 'message': {'text': 'The package.json file specifies the \'express\' and \'lodash\' dependenci...</var>
+<status status="PASS" start="2025-06-28T08:11:55.142239" elapsed="0.000000"/>
+</iter>
+<iter>
+<kw name="Run Keyword If" owner="BuiltIn">
+<arg>'${item['ruleId']}' == '${rule_id}'</arg>
+<arg>Append To List</arg>
+<arg>${matches}</arg>
+<arg>${item}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2025-06-28T08:11:55.142239" elapsed="0.000000"/>
+</kw>
+<var name="${item}">{'ruleId': 'php.lang.security.injection.tainted-sql-string.tainted-sql-string', 'level': 'error', 'message': {'text': 'The code concatenates unsanitized user input directly into a SQL query, resulting...</var>
+<status status="PASS" start="2025-06-28T08:11:55.142239" elapsed="0.000000"/>
+</iter>
+<iter>
+<kw name="Run Keyword If" owner="BuiltIn">
+<arg>'${item['ruleId']}' == '${rule_id}'</arg>
+<arg>Append To List</arg>
+<arg>${matches}</arg>
+<arg>${item}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2025-06-28T08:11:55.142239" elapsed="0.000000"/>
+</kw>
+<var name="${item}">{'ruleId': 'php.lang.security.injection.echoed-request.echoed-request', 'level': 'warning', 'message': {'text': "User input from the 'mensaje' GET parameter is echoed without sanitization, risking cro...</var>
+<status status="PASS" start="2025-06-28T08:11:55.142239" elapsed="0.000000"/>
+</iter>
+<iter>
+<kw name="Run Keyword If" owner="BuiltIn">
+<arg>'${item['ruleId']}' == '${rule_id}'</arg>
+<arg>Append To List</arg>
+<arg>${matches}</arg>
+<arg>${item}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2025-06-28T08:11:55.142239" elapsed="0.004194"/>
+</kw>
+<var name="${item}">{'ruleId': 'py/reflective-xss', 'level': 'warning', 'message': {'text': 'The vulnerability exists in the FastAPI endpoint where user input is directly interpolated into HTML without sanitization. This...</var>
+<status status="PASS" start="2025-06-28T08:11:55.142239" elapsed="0.004194"/>
+</iter>
+<iter>
+<kw name="Run Keyword If" owner="BuiltIn">
+<kw name="Append To List" owner="Collections">
+<arg>${matches}</arg>
+<arg>${item}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="PASS" start="2025-06-28T08:11:55.146433" elapsed="0.000000"/>
+</kw>
+<arg>'${item['ruleId']}' == '${rule_id}'</arg>
+<arg>Append To List</arg>
+<arg>${matches}</arg>
+<arg>${item}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2025-06-28T08:11:55.146433" elapsed="0.000000"/>
+</kw>
+<var name="${item}">{'ruleId': 'json.npm.security.package-dependencies-check.package-dependencies-check', 'level': 'warning', 'message': {'text': "The package.json file specifies dependency versions using non‐pinned vers...</var>
+<status status="PASS" start="2025-06-28T08:11:55.146433" elapsed="0.000000"/>
+</iter>
+<var>${item}</var>
+<value>@{results}</value>
+<status status="PASS" start="2025-06-28T08:11:55.140505" elapsed="0.005928"/>
+</for>
+<return>
+<value>${matches}</value>
+<status status="PASS" start="2025-06-28T08:11:55.146433" elapsed="0.000000"/>
+</return>
+<msg time="2025-06-28T08:11:55.146433" level="INFO">${findings} = [{'ruleId': 'json.npm.security.package-dependencies-check.package-dependencies-check', 'level': 'warning', 'message': {'text': 'The package.json file specifies the \'express\' and \'lodash\' dependenc...</msg>
+<var>${findings}</var>
+<arg>${PACKAGE_RULE_ID}</arg>
+<status status="PASS" start="2025-06-28T08:11:55.138211" elapsed="0.008222"/>
+</kw>
+<for flavor="IN">
+<iter>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${item['properties']['issue_owner']}</arg>
+<arg>${PACKAGE_OWNER}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2025-06-28T08:11:55.146433" elapsed="0.000000"/>
+</kw>
+<var name="${item}">{'ruleId': 'json.npm.security.package-dependencies-check.package-dependencies-check', 'level': 'warning', 'message': {'text': 'The package.json file specifies the \'express\' and \'lodash\' dependenci...</var>
+<status status="PASS" start="2025-06-28T08:11:55.146433" elapsed="0.000000"/>
+</iter>
+<iter>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${item['properties']['issue_owner']}</arg>
+<arg>${PACKAGE_OWNER}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2025-06-28T08:11:55.146433" elapsed="0.000000"/>
+</kw>
+<var name="${item}">{'ruleId': 'json.npm.security.package-dependencies-check.package-dependencies-check', 'level': 'warning', 'message': {'text': "The package.json file specifies dependency versions using non‐pinned vers...</var>
+<status status="PASS" start="2025-06-28T08:11:55.146433" elapsed="0.000000"/>
+</iter>
+<var>${item}</var>
+<value>@{findings}</value>
+<status status="PASS" start="2025-06-28T08:11:55.146433" elapsed="0.000000"/>
+</for>
+<status status="PASS" start="2025-06-28T08:11:55.138211" elapsed="0.008222"/>
+</test>
+<status status="PASS" start="2025-06-28T08:11:55.066509" elapsed="0.083960"/>
+</suite>
+<statistics>
+<total>
+<stat pass="3" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="ValidateSARIFFindings" id="s1" pass="3" fail="0" skip="0">ValidateSARIFFindings</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
